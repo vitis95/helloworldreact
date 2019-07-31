@@ -165,10 +165,10 @@ import * as serviceWorker from './serviceWorker';
 class Clock extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {date: new Date()};
+        this.state = { date: new Date() };
     }
 
-// 3. Quando l'output viene renderizzato, React invoca questo metodo - al suo intorno viene impostato un timer con cui invocare il metodo tick()
+    // 3. Quando l'output viene renderizzato, React invoca questo metodo - al suo intorno viene impostato un timer con cui invocare il metodo tick()
     componentDidMount() {
         this.timerID = setInterval(
             () => this.tick(),
@@ -176,19 +176,19 @@ class Clock extends React.Component {
         );
     }
 
-// 5. Se il componente Clock dovesse essere rimosso dal DOM, React invocherebbe questo metodo ed il timer verrebbe cancellato
+    // 5. Se il componente Clock dovesse essere rimosso dal DOM, React invocherebbe questo metodo ed il timer verrebbe cancellato
     componentWillUnmount() {
         clearInterval(this.timerID);
     }
 
-// 4. Ogni secondo quindi viene invocato questo metodo - ogni secondo viene cambiato lo stato e quindi React invoca ogni volta il metodo render per sapere cosa mostrare a schermo - ogni volta this.state.date avrà un valore differente e quindi verrà mostrato un output differente
+    // 4. Ogni secondo quindi viene invocato questo metodo - ogni secondo viene cambiato lo stato e quindi React invoca ogni volta il metodo render per sapere cosa mostrare a schermo - ogni volta this.state.date avrà un valore differente e quindi verrà mostrato un output differente
     tick() {
         this.setState({
             date: new Date()
         });
     }
 
-// 2. React invoca il metodo render - lo fa per capire cosa visualizzare a schermo - React si occupa di aggiornare il DOM in modo da farlo corrispondere all'output della renderizzazione di Clock 
+    // 2. React invoca il metodo render - lo fa per capire cosa visualizzare a schermo - React si occupa di aggiornare il DOM in modo da farlo corrispondere all'output della renderizzazione di Clock 
     render() {
         return (
             <div>
@@ -209,9 +209,32 @@ ReactDOM.render(
 
 
 
+class Interruttore extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { acceso: true };
+        // Necessario per accedere al corretto valore di `this` all'interno della callback
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick() {
+        this.setState(state => ({
+            acceso: !state.acceso
+        }));
+    }
 
+    render() {
+        return (
+            <button onClick={this.handleClick}>
+                {this.state.acceso ? 'Acceso' : 'Spento'}
+            </button>
+        );
+    }
+}
 
-
+ReactDOM.render(
+    <Interruttore />,
+    document.getElementById('root-5')
+);
 
 
 

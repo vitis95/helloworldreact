@@ -128,25 +128,97 @@ import * as serviceWorker from './serviceWorker';
 
 
 
- function tick() {
-     const element = (
-         <div>
-             <h1>HELLO WORLD!</h1>
-             <h2>It is {new Date().toLocaleTimeString()}.</h2>
-         </div>
-     );
-     ReactDOM.render(
-        element, 
-        document.getElementById('root')
-    );
- }
+//  function tick() {
+//      const element = (
+//          <div>
+//              <h1>HELLO WORLD!</h1>
+//              <h2>It is {new Date().toLocaleTimeString()}.</h2>
+//          </div>
+//      );
+//      ReactDOM.render(
+//         element, 
+//         document.getElementById('root')
+//     );
+//  }
 
-setInterval(tick, 1000); // ogni secondo viene chiamata la callback tick - che a sua volta chiama la funzione ReactDOM.render()
+// setInterval(tick, 1000); // ogni secondo viene chiamata la callback tick - che a sua volta chiama la funzione ReactDOM.render()
+
+// function Clock(props) {
+//     return (
+//         <div>
+//             <h1>Ciao, mondo!</h1>
+//             <h2>Sono le {props.date.toLocaleTimeString()}.</h2>
+//         </div>
+//     )
+// }
+
+// function tick() {
+//     ReactDOM.render(
+//         <Clock />,
+//         document.getElementById('root')
+//     );
+// }
+
+// setInterval(tick, 1000);
+
+
+class Clock extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {date: new Date()};
+    }
+
+// 3. Quando l'output viene renderizzato, React invoca questo metodo - al suo intorno viene impostato un timer con cui invocare il metodo tick()
+    componentDidMount() {
+        this.timerID = setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+// 5. Se il componente Clock dovesse essere rimosso dal DOM, React invocherebbe questo metodo ed il timer verrebbe cancellato
+    componentWillUnmount() {
+        clearInterval(this.timerID);
+    }
+
+// 4. Ogni secondo quindi viene invocato questo metodo - ogni secondo viene cambiato lo stato e quindi React invoca ogni volta il metodo render per sapere cosa mostrare a schermo - ogni volta this.state.date avrà un valore differente e quindi verrà mostrato un output differente
+    tick() {
+        this.setState({
+            date: new Date()
+        });
+    }
+
+// 2. React invoca il metodo render - lo fa per capire cosa visualizzare a schermo - React si occupa di aggiornare il DOM in modo da farlo corrispondere all'output della renderizzazione di Clock 
+    render() {
+        return (
+            <div>
+                <h1>Ciao, mondo!</h1>
+                <h2>Sono le {this.state.date.toLocaleTimeString()}.</h2>
+            </div>
+        );
+    }
+}
+
+// 1. Clocl viene passato a ReactDOM.render() - React invoca il costruttore di Clock - Clock ha bisogno di mostrare l'ora corrente, per cui inizializziamo lo stato con l'ora corrente - aggiorneremo in seguito lo stato 
+ReactDOM.render(
+    <Clock />,
+    document.getElementById('root')
+);
 
 
 
 
-function 
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -237,7 +237,7 @@ ReactDOM.render(
 );
 
 
-function BenvenutoUtente(props) {
+function BenvenutoUtente(props) {
     return <h1>Bentornato/a!</h1>;
 }
 
@@ -247,7 +247,7 @@ function BenvenutoOspite(props) {
 
 function Benvenuto(props) {
     const utenteAutenticato = props.utenteAutenticato;
-    if(utenteAutenticato) {
+    if (utenteAutenticato) {
         return <BenvenutoUtente />;
     }
     return <BenvenutoOspite />;
@@ -272,22 +272,22 @@ class ControlloLogin extends React.Component {
         super(props);
         this.handleLoginClick = this.handleLoginClick.bind(this);
         this.handleLogoutClick = this.handleLogoutClick.bind(this);
-        this.state = {utenteAutenticato: false};
+        this.state = { utenteAutenticato: false };
     }
 
-    handleLoginClick(){
-        this.setState({utenteAutenticato: true});
+    handleLoginClick() {
+        this.setState({ utenteAutenticato: true });
     }
 
-    handleLogoutClick(){
-        this.setState({utenteAutenticato: false});
+    handleLogoutClick() {
+        this.setState({ utenteAutenticato: false });
     }
 
     render() {
         const utenteAutenticato = this.state.utenteAutenticato;
         let bottone;
 
-        if(utenteAutenticato) {
+        if (utenteAutenticato) {
             bottone = (
                 <BottoneLogout onClick={this.handleLogoutClick} />
             );
@@ -311,7 +311,7 @@ ReactDOM.render(
 );
 
 function MessaggioAvviso(props) {
-    if (!props.attenzione){
+    if (!props.attenzione) {
         return null;
     }
 
@@ -321,7 +321,7 @@ function MessaggioAvviso(props) {
 class Pagina extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {mostraAvviso: true};
+        this.state = { mostraAvviso: true };
         this.handleToggleClick = this.handleToggleClick.bind(
             this
         );
@@ -346,10 +346,86 @@ class Pagina extends React.Component {
     }
 }
 
-    ReactDOM.render(
-        <Pagina />,
-        document.getElementById('root-8')
+ReactDOM.render(
+    <Pagina />,
+    document.getElementById('root-8')
+);
+
+
+// const numeri = [1, 2, 3, 4, 5];
+// const lista = numeri.map((numero) => numero  * 2);
+// console.log('LISTA', lista);
+
+// const numeri = [1, 2, 3, 4, 5];
+// const lista = numeri.map((numero) =>
+//     <li>{numero}</li>
+// );
+
+// ReactDOM.render(
+//     <ul>{lista}</ul>,
+//     document.getElementById('root-9')
+// );
+
+
+function ListaNumeri(props) {
+    const numeri = props.numeri;
+    const lista = numeri.map((numero) =>
+        <li key={numero.toString()}>{numero}</li>
     );
+    return (
+        <ul>{lista}</ul>
+    );
+}
+
+
+const numeri = [1, 2, 3, 4, 5];
+const numeri2 = [10, 20, 30, 40, 50];
+ReactDOM.render(
+    <ListaNumeri numeri={numeri} />,
+    document.getElementById('root-10')
+);
+
+
+// BLOG
+function Blog(props) {
+    const sidebar = (
+        <ul>
+            {props.articoli.map((articolo) =>
+                <li key={articolo.id}>
+                    {articolo.titolo}
+                </li>
+            )}
+        </ul>
+    );
+    const contenuto = props.articoli.map((articolo) =>
+        <div key={articolo.id}>
+            <h3>{articolo.titolo}</h3>
+            <p>{articolo.testo}</p>
+        </div>
+    );
+    return (
+        <div>
+            {sidebar}
+            <hr />
+            {contenuto}
+        </div>
+    );
+}
+
+const articoli = [
+    {id: 1, titolo: 'Ciao Mondo', testo: 'Benvenuto in imparando React!'},
+    {id: 2, titolo: 'Installazione', testo: 'Puoi installare React usando npm.'}
+];
+ReactDOM.render(
+    <Blog articoli={articoli} />,
+    document.getElementById('root-11')
+);
+
+
+
+
+
+
 
 
 

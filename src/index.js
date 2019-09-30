@@ -443,7 +443,7 @@ class NameForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}> <hr />
                 <label>
                     Name:
                     <input type="text" value={this.state.value} onChange={this.handleChange} />
@@ -483,7 +483,7 @@ class EssayForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}> <hr />
                 <label>
                     Essay:
                     <textarea value={this.state.value} onChange={this.handleChange} />
@@ -522,7 +522,7 @@ class FlavorForm extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit}> <hr />
                 <label>
                     Pick your favorite flavor:
                     <select value={this.state.value} onChange={this.handleChange}>
@@ -541,6 +541,60 @@ class FlavorForm extends React.Component {
 ReactDOM.render(
     <FlavorForm />,
     document.getElementById('root-14')
+);
+
+
+class Reservation extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isGoing: true,
+            numberOfGuests: 2
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+    }
+
+    handleInputChange(event) {
+        const target = event.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        this.setState({
+            [name] : value
+        });
+    }
+
+
+render() {
+    return (
+        <form> <hr />
+            <label>
+                Is going:
+                <input
+                    name="isGoing"
+                    type="checkbox"
+                    checked={this.state.isGoing}
+                    onChange={this.handleInputChange} />
+            </label>
+            <br />
+            <label>
+                Number of guests:
+                <input
+                    name="numberOfGuests"
+                    type="number"
+                    value={this.state.numberOfGuests}
+                    onChange={this.handleInputChange} />
+            </label>
+            <br />
+        </form>
+    )
+}
+}
+
+ReactDOM.render(
+    <Reservation />,
+    document.getElementById('root-15')
 );
 
 

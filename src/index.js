@@ -561,35 +561,35 @@ class Reservation extends React.Component {
         const name = target.name;
 
         this.setState({
-            [name] : value
+            [name]: value
         });
     }
 
 
-render() {
-    return (
-        <form> <hr />
-            <label>
-                Is going:
+    render() {
+        return (
+            <form> <hr />
+                <label>
+                    Is going:
                 <input
-                    name="isGoing"
-                    type="checkbox"
-                    checked={this.state.isGoing}
-                    onChange={this.handleInputChange} />
-            </label>
-            <br />
-            <label>
-                Number of guests:
+                        name="isGoing"
+                        type="checkbox"
+                        checked={this.state.isGoing}
+                        onChange={this.handleInputChange} />
+                </label>
+                <br />
+                <label>
+                    Number of guests:
                 <input
-                    name="numberOfGuests"
-                    type="number"
-                    value={this.state.numberOfGuests}
-                    onChange={this.handleInputChange} />
-            </label>
-            <br />
-        </form>
-    )
-}
+                        name="numberOfGuests"
+                        type="number"
+                        value={this.state.numberOfGuests}
+                        onChange={this.handleInputChange} />
+                </label>
+                <br />
+            </form>
+        )
+    }
 }
 
 ReactDOM.render(
@@ -610,25 +610,25 @@ class Calculator extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {temperature: ''};
+        this.state = { temperature: '' };
     }
     handleChange(e) {
-        this.setState({temperature: e.target.value});
+        this.setState({ temperature: e.target.value });
     }
 
     render() {
         const temperature = this.state.temperature;
         return (
             <div><br /><hr /><br />
-            <fieldset>
-                <legend>Enter temperature in Celsius:</legend>
-                <input
-                    value={temperature}
-                    onChange={this.handleChange} />
+                <fieldset>
+                    <legend>Enter temperature in Celsius:</legend>
+                    <input
+                        value={temperature}
+                        onChange={this.handleChange} />
 
-                <BoilingVerdict
-                    celsius={parseFloat (temperature)} />
-            </fieldset>
+                    <BoilingVerdict
+                        celsius={parseFloat(temperature)} />
+                </fieldset>
             </div>
         );
     }
@@ -640,6 +640,8 @@ ReactDOM.render(
 );
 
 
+// ADDING A SECOND INPUT
+
 const scalesNames = {
     c: 'Celsius',
     f: 'Fahrenheit'
@@ -649,13 +651,13 @@ class TemperatureInput extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
-        this.state = {temperature: ''};
+        this.state = { temperature: '' };
     }
 
     handleChange(e) {
-        this.setState({temperature: e.target.value});
+        this.setState({ temperature: e.target.value });
     }
-    
+
     render() {
         const temperature = this.state.temperature;
         const scale = this.props.scale;
@@ -684,6 +686,108 @@ ReactDOM.render(
     document.getElementById('root-17')
 );
 
+
+// WRITING CONVERSION FUNCTION
+
+function toCelsius(fahrenheit) {
+    return (fahrenheit - 30) * 5 / 9;
+}
+
+function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+}
+
+function tryConvert(temperature, convert) {
+    const input = parseFloat(temperature);
+    if (Number.isNaN(input)) {
+        return '';
+    }
+    const output = convert(input);
+    const rounded = Math.round(output * 1000) / 1000;
+    return rounded.toString();
+}
+
+// EXAMPLE
+// tryConvert('abc', toCelsius) --> returns an empty string 
+// tryConvert('10,22', toFahrenheit) -->  returns '50.396'.
+
+const scaleNames = {
+    c: 'Celsius',
+    f: 'Fahrenheit'
+};
+
+class TemperatureInput3 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        this.props.onTemperatureChange(e.target.value);
+    }
+
+    render() {
+        const temperature = this.props.temperature;
+        const scale = this.props.scale;
+        return (
+            <fieldset>
+                <legend>Enter temperature in {scaleNames[scale]}:</legend>
+                <input value={temperature} onChange={this.handleChange} />
+            </fieldset>
+        )
+    }
+}
+
+class Calculator3 extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleCelsiusChange = this.handleCelsiusChange.bind(this);
+        this.handleFahrenheitChange = this.handleFahrenheitChange.bind(this);
+        this.state = {
+            temperature: '',
+            scale: 'c'
+        };
+    }
+
+    handleCelsiusChange(temperature) {
+        this.setState({ scale: 'c', temperature });
+    }
+
+    handleFahrenheitChange(temperature) {
+        this.setState({ state: 'f', temperature });
+    }
+
+    render() {
+        const scale = this.state.scale;
+        const temperature = this.state.temperature;
+        const celsius = scale === 'f' ? tryConvert(temperature, toCelsius) : temperature;
+        const fahrenheit = scale === 'c' ? tryConvert(temperature, toFahrenheit) : temperature;
+
+        return (
+            <div>
+               <h1>CALCULATOR 3</h1>
+                <TemperatureInput
+                    scale="c"
+                    temperature={celsius}
+                    onTemperatureChange={this.handleCelsiusChange} />
+
+                <TemperatureInput
+                    scale="f"
+                    temperature={fahrenheit}
+                    onTemperatureChange={this.handleFahrenheitChange} />
+
+                <BoilingVerdict
+                    celsius={parseFloat(celsius)} />
+            </div>
+        )
+    }
+
+}
+
+ReactDOM.render(
+    <Calculator2 />,
+    document.getElementById('root-18')
+);
 
 
 

@@ -598,6 +598,8 @@ ReactDOM.render(
 );
 
 
+// 10 - LIFTING STATE UP 
+
 function BoilingVerdict(props) {
     if (props.celsius >= 100) {
         return <p>The water would boil.</p>;
@@ -619,9 +621,11 @@ class Calculator extends React.Component {
     render() {
         const temperature = this.state.temperature;
         return (
-            <div><br /><hr /><br />
+            <div>
+                <br /><hr  size="1" color="red" align="center" /><br />
+                <h1><center>CALCULATOR</center></h1>
                 <fieldset>
-                    <legend>Enter temperature in Celsius:</legend>
+                    <legend>Enter temperature in Celsius: PROVA</legend>
                     <input
                         value={temperature}
                         onChange={this.handleChange} />
@@ -629,6 +633,7 @@ class Calculator extends React.Component {
                     <BoilingVerdict
                         celsius={parseFloat(temperature)} />
                 </fieldset>
+                <br /><hr  size="1" color="red" align="center" /><br />
             </div>
         );
     }
@@ -674,8 +679,11 @@ class Calculator2 extends React.Component {
     render() {
         return (
             <div>
+                <br /><hr  size="1" color="red" align="center" /><br />
+                <h1><center>CALCULATOR 2</center></h1>
                 <TemperatureInput scale='c' />
                 <TemperatureInput scale='f' />
+                <hr  size="1" color="red" align="center" />
             </div>
         )
     }
@@ -697,7 +705,7 @@ function toFahrenheit(celsius) {
     return (celsius * 9 / 5) + 32;
 }
 
-function tryConvert(temperature, convert) {
+function tryConvert(temperature, convert) { // accetta una temperatura e una delle due funzioni convert e restituisce una stringa - in sostanza restituisce i gradi convertiti  
     const input = parseFloat(temperature);
     if (Number.isNaN(input)) {
         return '';
@@ -781,7 +789,6 @@ class Calculator3 extends React.Component {
             </div>
         )
     }
-
 }
 
 ReactDOM.render(

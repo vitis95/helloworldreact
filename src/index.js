@@ -798,18 +798,27 @@ ReactDOM.render(
 
 
 
-// SONO ARRIVATO QUA - " Writing Conversion Functions " - https://reactjs.org/docs/lifting-state-up.html
+// 12 - COMPOSITION VS INHERITANC
+
+function BordoFigo(props) {
+    return (
+        <div className={'BordoFido BordoFigo-' + props.colore}>
+            {props.children}
+        </div>
+    );
+}
 
 
-
-
-
-
-
-
-
-
-
+function FinestraBenvenuto() {
+    return (
+        <BordoFigo colore="blue">
+            <h1 className="Finestra-titolo">Benvenuto/a!</h1>
+            <p className="Finestra-messaggio">
+                Ti ringraziamo per questa tua visita nella nostra nave spaziale!
+            </p>
+        </BordoFigo>
+    )
+}
 
 
 
